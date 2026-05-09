@@ -1,0 +1,24 @@
+module(
+    name ="smoothlib",
+    version = "0.1.0",
+)
+bazel_dep(name = "rules_cc",   version = "0.2.17")
+bazel_dep(name = "googletest", version = "1.17.0")
+bazel_dep(name = "platforms",  version = "0.0.11")
+bazel_dep(name = "bazel_skylib", version = "1.7.1")
+bazel_dep(name = "rules_nixpkgs_core", version = "0.13.0")
+bazel_dep(name = "rules_nixpkgs_cc",   version = "0.13.0")
+
+git_override(
+      module_name = "rules_nixpkgs_cc",
+      remote      = "https://github.com/tweag/rules_nixpkgs",
+      commit      = "daaf495b92ebd28f1580798235113260fc8ffd72",  # v0.13.0 tag
+      strip_prefix = "toolchains/cc",
+)
+nix_repo = use_extension("@rules_nixpkgs_core//extensions:repository.bzl", "nix_repo")
+nix_repo.file(
+    name = "nixpkgs",
+    file = "//:nixpkgs.nix",
+    file_deps = ["//:flake.lock"],
+)
+use_repo(nix_repo, "nixpkgs")

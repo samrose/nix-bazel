@@ -1,0 +1,5 @@
+bazel-*
+.bazel_remote_cache/
+result
+result-*
+.direnv/

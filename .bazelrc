@@ -1,0 +1,5 @@
+common --incompatible_autoload_externally=+@rules_cc
+common --enable_workspace
+build --cxxopt=-std=c++17
+test --test_output=errors
+build --host_platform=@rules_nixpkgs_core//platforms:host
